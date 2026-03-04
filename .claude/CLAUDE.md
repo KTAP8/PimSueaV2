@@ -20,7 +20,7 @@ Supports Group Orders — one link, members submit sizes, each pays their share.
 | PDF Export | pdfkit |
 | Excel Export | exceljs |
 | Payment | promptpay-qr (no gateway in MVP — manual confirm) |
-| Notifications | LINE Notify API + LINE Messaging API |
+| Notifications | LINE Messaging API |
 | Validation | Zod on all API route inputs |
 | Hosting | Vercel (frontend) + Supabase (DB + storage) |
 | AI (Phase 2) | Claude API (@anthropic-ai/sdk) |
@@ -57,7 +57,7 @@ Supports Group Orders — one link, members submit sizes, each pays their share.
     server.ts          — server component Supabase client
     middleware.ts      — session refresh
   pricing.ts           — calculatePrice() — used by both frontend and API routes
-  line.ts              — LINE Notify + Messaging API helpers
+  line.ts              — LINE Messaging API helpers
   print.ts             — server-side print file generation (node-canvas)
   canvas-serialiser.ts — Fabric.js px → cm converter and AABB calculator
 
@@ -99,7 +99,6 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=          # server-side only, never expose to client
 NEXT_PUBLIC_PROMPTPAY_ID=           # your PromptPay phone/ID number
-LINE_NOTIFY_TOKEN=                  # admin LINE Notify token
 LINE_CHANNEL_ACCESS_TOKEN=          # LINE Messaging API token
 LINE_CHANNEL_SECRET=                # LINE Messaging API secret
 ```

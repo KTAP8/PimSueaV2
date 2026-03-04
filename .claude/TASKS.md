@@ -98,7 +98,6 @@ NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY
 NEXT_PUBLIC_PROMPTPAY_ID
-LINE_NOTIFY_TOKEN
 LINE_CHANNEL_ACCESS_TOKEN
 LINE_CHANNEL_SECRET
 ```
@@ -513,7 +512,7 @@ When admin changes order status to 'confirmed':
 2. If print file generation succeeds: continue normally
 3. If it fails:
    - Add `print_file_error: true` flag to the order record
-   - Send LINE Notify message to admin: "⚠️ Print file failed for order [order_number]. Please retry."
+   - Log the error server-side (admin can see it in the order detail page)
    - Do NOT block the status update — order is still confirmed
 
 On order detail page in admin: show "Retry print file" button
@@ -610,19 +609,13 @@ on the client when the API responds.
 ## Group I — Notifications & Security
 
 ### T27 — LINE notifications (S) — depends on: T22
-Create `/lib/line.ts` with two functions:
-
-`sendAdminNotify(message: string)`:
-- Calls LINE Notify API
-- Token from `admin_settings` table (key = 'line_notify_token')
+Create `/lib/line.ts` with one function:
 
 `sendCustomerMessage(lineUserId: string, message: string)`:
 - Calls LINE Messaging API
 - Credentials from `admin_settings` table
 
 Wire notifications to order events:
-- New order placed → admin notify:
-  "🛍 New order [order_number] — ฿[total]"
 - Status → confirmed → customer:
   "✅ ออเดอร์ [order_number] ของคุณได้รับการยืนยันแล้ว กำลังเตรียมการผลิต"
 - Status → shipped → customer:
