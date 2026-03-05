@@ -12,7 +12,6 @@ interface PageProps {
 type ProductRow = Tables<'products'>
 type VariantRow = Pick<Tables<'product_variants'>, 'color_name' | 'color_hex' | 'size' | 'is_available'>
 type PriceRow = Pick<Tables<'shirt_pricing'>, 'price_per_unit_thb'>
-type TemplateRow = Pick<Tables<'product_templates'>, 'mockup_image_url'>
 
 export async function generateMetadata({ params }: PageProps) {
   const supabase = createClient()
@@ -30,7 +29,6 @@ export default async function CatalogDetailPage({ params }: PageProps) {
     { data: productRaw },
     { data: variantsRaw },
     { data: priceRaw },
-    { data: templateRaw },
   ] = await Promise.all([
     supabase
       .from('products')
@@ -52,12 +50,6 @@ export default async function CatalogDetailPage({ params }: PageProps) {
       .eq('size', 'S')
       .eq('min_qty', 1)
       .single(),
-    supabase
-      .from('product_templates')
-      .select('mockup_image_url')
-      .eq('product_id', params.productId)
-      .eq('face', 'front')
-      .single(),
   ])
 
   const product = productRaw as ProductRow | null
@@ -65,7 +57,6 @@ export default async function CatalogDetailPage({ params }: PageProps) {
 
   const variants = (variantsRaw ?? []) as VariantRow[]
   const priceRow = priceRaw as PriceRow | null
-  const template = templateRaw as TemplateRow | null
 
   // Deduplicate colors for swatches using Array.from instead of spread (ES target compat)
   const uniqueColors = Array.from(
@@ -82,11 +73,11 @@ export default async function CatalogDetailPage({ params }: PageProps) {
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
-        {/* Left: mockup image */}
+        {/* Left: catalog showcase image */}
         <div className="relative aspect-square bg-surface-gray">
-          {template?.mockup_image_url ? (
+          {product.catalog_image_url ? (
             <Image
-              src={template.mockup_image_url}
+              src={product.catalog_image_url}
               alt={product.name}
               fill
               className="object-cover"

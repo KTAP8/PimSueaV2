@@ -29,28 +29,17 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   const products = (productsRaw ?? []) as Tables<'products'>[]
   const productIds = products.map((p) => p.id)
 
-  type TemplateRow = Pick<Tables<'product_templates'>, 'product_id' | 'mockup_image_url'>
   type PriceRow = Pick<Tables<'shirt_pricing'>, 'product_id' | 'price_per_unit_thb'>
 
-  // Fetch front templates and starting prices in parallel
-  const [{ data: templatesRaw }, { data: pricesRaw }] = await Promise.all([
-    supabase
-      .from('product_templates')
-      .select('product_id, mockup_image_url')
-      .eq('face', 'front')
-      .in('product_id', productIds),
-    supabase
-      .from('shirt_pricing')
-      .select('product_id, price_per_unit_thb')
-      .eq('color_name', 'White')
-      .eq('size', 'S')
-      .eq('min_qty', 1)
-      .in('product_id', productIds),
-  ])
+  // Fetch starting prices (catalog_image_url comes directly from products)
+  const { data: pricesRaw } = await supabase
+    .from('shirt_pricing')
+    .select('product_id, price_per_unit_thb')
+    .eq('color_name', 'White')
+    .eq('size', 'S')
+    .eq('min_qty', 1)
+    .in('product_id', productIds)
 
-  const mockupByProductId = Object.fromEntries(
-    ((templatesRaw ?? []) as TemplateRow[]).map((t) => [t.product_id, t.mockup_image_url])
-  )
   const priceByProductId = Object.fromEntries(
     ((pricesRaw ?? []) as PriceRow[]).map((p) => [p.product_id, p.price_per_unit_thb])
   )
@@ -85,7 +74,6 @@ export default async function CatalogPage({ searchParams }: PageProps) {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => {
-            const mockupUrl = mockupByProductId[product.id]
             const startingPrice = priceByProductId[product.id]
 
             return (
@@ -95,9 +83,9 @@ export default async function CatalogPage({ searchParams }: PageProps) {
                 className="bg-crisp-white rounded-card border border-surface-gray overflow-hidden hover:shadow-md transition-shadow"
               >
                 <div className="aspect-square relative bg-surface-gray">
-                  {mockupUrl ? (
+                  {product.catalog_image_url ? (
                     <Image
-                      src={mockupUrl}
+                      src={product.catalog_image_url}
                       alt={product.name}
                       fill
                       className="object-cover"
