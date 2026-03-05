@@ -1,5 +1,22 @@
 # Design System & Brand Rules
 
+## Brand Assets
+
+**Logo:** `public/logo.svg` — use as `<img src="/logo.svg" />` or `<Image src="/logo.svg" />`.
+SVG is already in brand green `#08636D`. Do not recolor it.
+Dimensions: 137 × 52px (use as-is or scale proportionally).
+
+**Font: FC Vision** (loaded via `globals.css` `@font-face`)
+
+| File | Weight | Tailwind class |
+|---|---|---|
+| `fc-vision-light.otf` | 300 (light) | `font-light` — default body weight |
+| `fc-vision-bold.otf` | 700 (bold) | `font-bold` — UI labels, prices |
+| `fc-vision-heavy.otf` | 900 (heavy) | `font-heavy` — large display headings only |
+
+FC Vision is the **only** typeface for this project. Do not import Google Fonts for UI.
+(Google Fonts Thai variants like Sarabun/Kanit are only allowed inside the canvas tool for customer design use.)
+
 ## Color Palette
 
 | Token | Hex | Usage |

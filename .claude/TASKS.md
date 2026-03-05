@@ -9,14 +9,15 @@
 ## Progress
 - [x] T01 — Scaffold project
 - [x] T02 — Configure Supabase
-- [ ] T03 — Database schema ← CURRENT
-- [ ] T04 — Seed data
-- [ ] T05 — Signup page
-- [ ] T06 — Login page
-- [ ] T07 — Route protection middleware
-- [ ] T08 — Header component
-- [ ] T09 — Catalog list page
-- [ ] T10 — Catalog detail page
+- [x] T03 — Database schema
+- [x] T04 — Seed data
+- [x] T05 — Signup page
+- [x] T06 — Login page
+- [x] T07 — Route protection middleware
+- [x] T08 — Header component
+- [x] T09 — Catalog list page
+- [x] T10 — Catalog detail page
+- [ ] T11 — Canvas: base setup ← CURRENT
 - [ ] T11 — Canvas: base setup
 - [ ] T12 — Canvas: upload + text tools
 - [ ] T13 — Canvas: controls + constraints

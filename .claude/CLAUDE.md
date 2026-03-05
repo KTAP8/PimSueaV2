@@ -103,6 +103,18 @@ LINE_CHANNEL_ACCESS_TOKEN=          # LINE Messaging API token
 LINE_CHANNEL_SECRET=                # LINE Messaging API secret
 ```
 
+## Verification & Testing
+
+Before submitting any changes, run the following commands to verify the work:
+
+1. **Lint:** `npm run lint` — ESLint via Next.js
+2. **Types:** `npm run typecheck` — TypeScript strict-mode check (`tsc --noEmit`)
+3. **Both:** `npm run check` — runs lint + typecheck together
+
+Fix all errors before marking a task complete. Warnings are acceptable but should be noted.
+
+No test framework is configured in Phase 1. Manual verification checkpoints are in `TASKS.md`.
+
 ## Current Build Phase
 
 **Phase 1 — MVP** (T01–T28). Complete tasks in order. Do not skip ahead.

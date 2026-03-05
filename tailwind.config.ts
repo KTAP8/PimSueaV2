@@ -19,6 +19,14 @@ const config: Config = {
         'surface-gray': '#E9ECEF',
         'crisp-white': '#F8F9FA',
       },
+      fontFamily: {
+        sans: ['FC Vision', 'sans-serif'],
+      },
+      fontWeight: {
+        light: '300',
+        bold: '700',
+        heavy: '900',
+      },
       borderRadius: {
         btn: '4px',
         card: '8px',
