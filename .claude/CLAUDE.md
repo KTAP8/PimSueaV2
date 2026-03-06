@@ -37,7 +37,8 @@ Supports Group Orders — one link, members submit sizes, each pays their share.
   /design/[productId]  — design canvas
   /cart                — cart page
   /checkout            — checkout page
-  /orders              — order history
+  /designs             — my designs (user's saved drafts)
+  /orders              — my orders (order history)
   /orders/[orderId]    — order detail
   /group/[shareCode]   — group order member submission form (public)
   /admin               — admin layout (role-gated)

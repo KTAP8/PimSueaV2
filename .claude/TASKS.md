@@ -46,7 +46,7 @@ Do not start the next group until the current group passes its checkpoint.
 |---|---|
 | T01–T02 | App runs locally on localhost:3000. Supabase env vars connected. |
 | T03–T04 | All tables visible in Supabase Table Editor. Seed data present. Run verification queries from pimsua_setup.sql Section 8. |
-| T05–T08 | Can sign up, log in, log out. /cart redirects to /login when logged out. Header shows correct state. |
+| T05–T08 | Can sign up, log in, log out. /cart redirects to /login when logged out. Header shows correct logged-in state: My Designs, My Orders, cart icon, name, logout. |
 | T09–T10 | Both products visible in catalog. Detail page loads. |
 | T11–T15 | Can place image + text on canvas. Save design → check designs table has canvas_json with x_cm/y_cm values (NOT pixels). |
 | T16–T17 | Live price updates as objects are moved/resized. Price changes when quantity stepper is used. |
@@ -190,12 +190,16 @@ Rules:
 ### T08 — Header component (S) — depends on: T07
 Build shared `Header` server component.
 
-Logo: text "PimSuea" in `#08636D`, links to `/catalog`.
+Logo: SVG `/logo.svg`, links to `/catalog`.
 
 When logged out: Login button + Sign Up button.
 
-When logged in: user's full_name, cart icon with item count
-badge (count from cart_items table), logout button.
+When logged in:
+- My Designs link → `/designs` (user's saved design drafts)
+- My Orders link → `/orders` (order tracking)
+- Cart icon with item count badge (count from cart_items table)
+- User's full_name
+- Logout button
 
 Use Supabase server component session for auth state.
 
@@ -209,7 +213,7 @@ Build `/app/catalog/page.tsx`.
 Fetch all active products from Supabase (server component).
 
 Display as product cards:
-- Product mockup image (from product_templates.mockup_image_url)
+- Product showcase image (from products.catalog_image_url)
 - Product name
 - "from ฿X" starting price
 - Printing type badges (DTG / DTF)
@@ -454,7 +458,7 @@ from profiles table.
 
 ---
 
-### T20 — Order status pages (S) — depends on: T19
+### T20 — Account pages: orders + designs (S) — depends on: T19
 Build `/app/orders/[orderId]/page.tsx`:
 - Order number, created date
 - Status badge with colour coding:
@@ -466,10 +470,17 @@ Build `/app/orders/[orderId]/page.tsx`:
 - While status = 'pending_payment': show PromptPay QR + instructions
 - Poll order status every 30 seconds while pending_payment
 
-Build `/app/orders/page.tsx`:
+Build `/app/orders/page.tsx` (My Orders):
 - Simple list of user's orders
 - Columns: order number, date, status badge, total
 - Each row links to `/orders/[orderId]`
+
+Build `/app/designs/page.tsx` (My Designs):
+- List of user's saved designs with status = 'draft'
+- Show: design preview thumbnail (preview_url), design name,
+  print tier badge, created date
+- Each card links to `/design/[productId]` to re-open the canvas
+- Empty state: "ยังไม่มีดีไซน์ เริ่มออกแบบเลย →" with link to /catalog
 
 ---
 

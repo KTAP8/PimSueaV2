@@ -38,6 +38,19 @@ export default async function Header() {
         <div className="flex items-center gap-4">
           {user ? (
             <>
+              <Link
+                href="/designs"
+                className="text-sm font-bold text-deep-black hover:text-brand-green transition-colors hidden sm:block"
+              >
+                ดีไซน์ของฉัน
+              </Link>
+              <Link
+                href="/orders"
+                className="text-sm font-bold text-deep-black hover:text-brand-green transition-colors hidden sm:block"
+              >
+                คำสั่งซื้อ
+              </Link>
+
               <span className="text-sm font-bold text-deep-black hidden sm:block">
                 {fullName ?? user.email}
               </span>

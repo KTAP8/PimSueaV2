@@ -79,6 +79,6 @@ Audience: Thai university students. Be direct and energetic.
 
 Implemented in `/lib/supabase/middleware.ts`:
 
-- `/design/*`, `/cart`, `/checkout`, `/orders/*` → require auth → redirect `/login`
+- `/design/*`, `/designs`, `/cart`, `/checkout`, `/orders/*` → require auth → redirect `/login`
 - `/admin/*` → require auth AND `profiles.role = 'admin'` → redirect `/` if not admin
 - `/group/[shareCode]` → public, no auth required (members don't need accounts)
